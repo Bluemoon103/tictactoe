@@ -1,1 +1,91 @@
-# tictactoe
+@@ -0,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tic Tac Toe</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 40px;
+  }
+  .board {
+    width: 300px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 5px;
+  }
+  .cell {
+    width: 100px;
+    height: 100px;
+    background: #ddd;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>Tic Tac Toe</h1>
+
+<div class="board">
+  <div class="cell" onclick="makeMove(this,0)"></div>
+  <div class="cell" onclick="makeMove(this,1)"></div>
+  <div class="cell" onclick="makeMove(this,2)"></div>
+  <div class="cell" onclick="makeMove(this,3)"></div>
+  <div class="cell" onclick="makeMove(this,4)"></div>
+  <div class="cell" onclick="makeMove(this,5)"></div>
+  <div class="cell" onclick="makeMove(this,6)"></div>
+  <div class="cell" onclick="makeMove(this,7)"></div>
+  <div class="cell" onclick="makeMove(this,8)"></div>
+</div>
+
+<h2 id="status"></h2>
+
+<script>
+let board = ["","","","","","","","",""];
+let currentPlayer = "X";
+let gameOver = false;
+
+function makeMove(cell, index) {
+    if (board[index] !== "" || gameOver) return;
+
+    board[index] = currentPlayer;
+    cell.innerHTML = currentPlayer;
+
+    if (checkWin()) {
+        document.getElementById("status").innerHTML = currentPlayer + " wins!";
+        gameOver = true;
+        return;
+    }
+
+    if (!board.includes("")) {
+        document.getElementById("status").innerHTML = "Draw!";
+        gameOver = true;
+        return;
+    }
+
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+}
+
+function checkWin() {
+    const wins = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ];
+
+    return wins.some(combo =>
+        board[combo[0]] &&
+        board[combo[0]] === board[combo[1]] &&
+        board[combo[1]] === board[combo[2]]
+    );
+}
+</script>
+
+</body>
+</html>
